@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = ["g4","k4","b2a","g4a"];
+  final duplicateItems = ["g4","k4","b2a"];
   var items = <String>[];
 
   @override
@@ -29,12 +29,12 @@ class _HomePageState extends State<HomePage> {
     if(query.isNotEmpty)
       {
         List<String> dummyListData = <String>[];
-        for (var item in dummySearchList) {
+        dummySearchList.forEach((item) {
           if(item.contains(query))
             {
               dummyListData.add(item);
             }
-        }
+        });
         setState(() {
           items.clear();
           items.addAll(dummyListData);
@@ -53,19 +53,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff21254A),
+        backgroundColor: Color(0xff21254A),
         title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             TextField(
               onChanged: (value){
                 filterSearchReslut(value);
               },
               controller: editingController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: "Otobüs/Durak Arama",
                 hintText: "Aramak için yazınız",
                 prefixIcon: Icon(Icons.search),
@@ -74,13 +74,13 @@ class _HomePageState extends State<HomePage> {
                 )
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             ListView.builder(
               shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(items[index]),
+                    title: Text("${items[index]}"),
                   );
                 })
           ],
