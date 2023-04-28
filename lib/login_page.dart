@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start, 
               children: [
                 Container(
                   height: height * .25,
@@ -130,6 +131,14 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text("Hesap oluştur", style: TextStyle(color: Colors.pink[200]),)
                           ),
                         ),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: (){
+                              signInWithGoogle();
+                            },
+                            child: const Text('Google ile giriş'),
+                          )
+                        ) 
                       ],
                     ),
                   ),
@@ -160,5 +169,18 @@ class _LoginPageState extends State<LoginPage> {
         )
       )
     );
+  }
+
+  signInWithGoogle() async {
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken:  googleAuth?.accessToken,
+      idToken: googleAuth?.idToken
+    );
+
+    UserCredential userCredential = await  FirebaseAuth.instance.signInWithCredential(credential);
+    print(userCredential.user?.displayName);
   }
 }
