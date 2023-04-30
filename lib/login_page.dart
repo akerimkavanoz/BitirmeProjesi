@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:otobus/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -182,5 +183,10 @@ class _LoginPageState extends State<LoginPage> {
 
     UserCredential userCredential = await  FirebaseAuth.instance.signInWithCredential(credential);
     print(userCredential.user?.displayName);
+
+    if (userCredential.user != null) {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const HomePage(title: 'Arama')));
+    }
   }
 }

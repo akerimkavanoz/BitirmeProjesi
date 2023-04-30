@@ -1,5 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,12 +30,12 @@ class _HomePageState extends State<HomePage> {
     if(query.isNotEmpty)
       {
         List<String> dummyListData = <String>[];
-        dummySearchList.forEach((item) {
+        for (var item in dummySearchList) {
           if(item.contains(query))
             {
               dummyListData.add(item);
             }
-        });
+        }
         setState(() {
           items.clear();
           items.addAll(dummyListData);
@@ -53,19 +54,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff21254A),
+        actions: [
+          IconButton(onPressed: () async{
+            await GoogleSignIn().signOut();
+            FirebaseAuth.instance.signOut();
+            Navigator.pushReplacementNamed(context, "/loginPage");
+          }, icon: const Icon(Icons.power_settings_new)
+      )],
+        backgroundColor: const Color(0xff21254A),
         title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               onChanged: (value){
                 filterSearchReslut(value);
               },
               controller: editingController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Otobüs/Durak Arama",
                 hintText: "Aramak için yazınız",
                 prefixIcon: Icon(Icons.search),
@@ -74,13 +82,13 @@ class _HomePageState extends State<HomePage> {
                 )
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListView.builder(
               shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text("${items[index]}"),
+                    title: Text(items[index]),
                   );
                 })
           ],
