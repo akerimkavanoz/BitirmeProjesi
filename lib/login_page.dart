@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                         customSizedBox(),
                         Center(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => Navigator.pushNamed(context, "/resetPassword"),
                             child: Text("Şifremi Unuttum", style: TextStyle(color: Colors.pink[200]),)
                           ),
                         ),

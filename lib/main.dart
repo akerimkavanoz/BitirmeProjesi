@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:otobus/home_page.dart';
 import 'package:otobus/login_page.dart';
+import 'package:otobus/reset_password.dart';
 import 'package:otobus/sign_up.dart';
 
 import 'firebase_options.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         "/loginPage" : (context) => const LoginPage(),
         "/signUp" : (context) => const SignUp(),
         "/homePage" : (context) => const HomePage(title: 'Arama'),
+        "/resetPassword" : (context) => const ResetPassword(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

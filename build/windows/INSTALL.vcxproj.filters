@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Kerim\StudioProjects\Otobus\build\windows\CMakeFiles\668dc9db4e5909336ea36424337f0a26\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{C2D85BDC-3075-3733-BDCC-45740D270BB4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
