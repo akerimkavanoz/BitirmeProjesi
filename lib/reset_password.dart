@@ -1,4 +1,10 @@
+// ignore_for_file: avoid_print
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:otobus/login_page.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -8,6 +14,7 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
+  TextEditingController forgetPasswordController = TextEditingController();
   late String email;
   final formKey = GlobalKey<FormState>();
   @override
@@ -52,6 +59,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 10),
                           child: TextFormField(
+                            controller: forgetPasswordController,
                             validator: (value){
                               if (value!.isEmpty) {
                                 return "Bilgileri eksiksiz doldurunuz";
@@ -72,7 +80,22 @@ class _ResetPasswordState extends State<ResetPassword> {
                         Center(
                           child: TextButton(
                             onPressed: () async {
-                            
+                              var forgotEmail = forgetPasswordController.text.trim();
+
+                              try{
+                                await FirebaseAuth.instance
+                                .sendPasswordResetEmail(email: forgotEmail)
+                                .then((value) => {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("Sıfırlamak için mailinize bakınız, giriş sayfasına yönlendiriliyorsunuz.")
+                                    ),
+                                ),
+                                  Get.to(()=> const LoginPage()),
+                                  });
+                              }on FirebaseAuthException catch(e) {
+                                print("Error: $e");
+                              }
                             },
                             child: Container(
                               height: 50,
