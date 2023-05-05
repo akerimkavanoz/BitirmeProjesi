@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.otobus">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
    <application
         android:label="otobus"
         android:name="${applicationName}"
@@ -30,5 +34,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <meta-data android:name="com.google.android.geo.API_KEY" 
+                android:value="AIzaSyB5g8wBOtRnjs2qaBOLbqTi6t17APeZ02g" />
     </application>
 </manifest>

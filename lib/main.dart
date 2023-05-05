@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:otobus/googlemap.dart';
 import 'package:otobus/home_page.dart';
 import 'package:otobus/login_page.dart';
+import 'package:otobus/otobusbilgi.dart';
 import 'package:otobus/reset_password.dart';
 import 'package:otobus/sign_up.dart';
 
@@ -13,11 +15,11 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,);
-  runApp(const MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,14 @@ class MyApp extends StatelessWidget {
         "/signUp" : (context) => const SignUp(),
         "/homePage" : (context) => const HomePage(title: 'Arama'),
         "/resetPassword" : (context) => const ResetPassword(),
+        "/otobusBilgi" : (context) => const otobusBilgi(),
+        "/googleMap" : (context) => googleMap(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: //const LoginPage()
+      home: //const otobusBilgi() 
+      //googleMap()
       StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {

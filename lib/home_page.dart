@@ -1,7 +1,11 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:otobus/googlemap.dart';
+import 'package:otobus/otobusbilgi.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -10,19 +14,28 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
 class _HomePageState extends State<HomePage> {
+  final duplicateItems = [""];
+  //final Stream<QuerySnapshot> _otobusler = FirebaseFirestore.instance.collection('otobusler').snapshots();
+  var ref = FirebaseFirestore.instance.collection('otobusler');
+
+  _incerementCounter() async {
+    var allDocs = await ref.get();
+    for (var element in allDocs.docs) {duplicateItems.add(element.id);}
+    //print(docID);
+    //duplicateItems.add(docID);
+  }
 
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = ["g4","k4","b2a"];
+  
   var items = <String>[];
 
   @override
   void initState() {
     items.addAll(duplicateItems);
     super.initState();
+    _incerementCounter();
   }
-
   void filterSearchReslut(String query) {
     List<String> dummySearchList = <String>[];
     dummySearchList.addAll(duplicateItems);
@@ -50,6 +63,7 @@ class _HomePageState extends State<HomePage> {
         });
       }
   }
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,10 +101,14 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(items[index]),
+                  return InkWell(
+                    onTap: () => Get.to(const otobusBilgi()),
+                    child: ListTile(
+                      title: Text(items[index]),
+                    ),
                   );
-                })
+                }),
+                ElevatedButton(onPressed: () => Get.to(googleMap()), child: const Text("Haritada konumumu göster")),
           ],
         ),
       ),
