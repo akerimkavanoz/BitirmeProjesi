@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         "/resetPassword" : (context) => const ResetPassword(),
         "/googleMap" : (context) => googleMap(),
       },
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
