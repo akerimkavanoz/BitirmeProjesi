@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () => Get.to(const otobusBilgi()),
+                    onTap: () => Get.to(otobusBilgi(oismi: items[index])),
                     child: ListTile(
                       title: Text(items[index]),
                     ),
