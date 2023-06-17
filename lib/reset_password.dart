@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:otobus/login_page.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -91,7 +90,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                         content: Text("Sıfırlamak için mailinize bakınız, giriş sayfasına yönlendiriliyorsunuz.")
                                     ),
                                 ),
-                                  Get.to(()=> const LoginPage()),
+                                  Get.to(()=>  LoginPage()),
                                   });
                               }on FirebaseAuthException catch(e) {
                                 print("Error: $e");

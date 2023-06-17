@@ -8,14 +8,15 @@ import 'package:otobus/googlemap.dart';
 import 'package:otobus/otobusbilgi.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+
+  const HomePage({Key? key}) : super(key: key);
+
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 class _HomePageState extends State<HomePage> {
-  final duplicateItems = [""];
+  late final List<dynamic> duplicateItems = [];
   //final Stream<QuerySnapshot> _otobusler = FirebaseFirestore.instance.collection('otobusler').snapshots();
   var ref = FirebaseFirestore.instance.collection('otobusler');
 
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   TextEditingController editingController = TextEditingController();
   
-  var items = <String>[];
+  var items = [];
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     _incerementCounter();
   }
   void filterSearchReslut(String query) {
-    List<String> dummySearchList = <String>[];
+    List dummySearchList = [];
     dummySearchList.addAll(duplicateItems);
 
     if(query.isNotEmpty)
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
           }, icon: const Icon(Icons.power_settings_new)
       )],
         backgroundColor: const Color(0xff21254A),
-        title: Text(widget.title),
+        title: const Text("Arama"),
       ),
       body: Center(
         child: Column(
@@ -102,7 +103,10 @@ class _HomePageState extends State<HomePage> {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () => Get.to(otobusBilgi(oismi: items[index])),
+                    onTap: () {
+                      Get.to(otobusBilgi(oismi: items[index],));
+                      //print(items);
+                    },
                     child: ListTile(
                       title: Text(items[index]),
                     ),

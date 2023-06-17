@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -28,9 +29,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       routes: {
-        "/loginPage" : (context) => const LoginPage(),
+        "/loginPage" : (context) =>  const LoginPage(),
         "/signUp" : (context) => const SignUp(),
-        "/homePage" : (context) => const HomePage(title: 'Arama'),
+        "/homePage" : (context) => const HomePage(),
         "/resetPassword" : (context) => const ResetPassword(),
         "/googleMap" : (context) => googleMap(),
         "/home":(context) =>  const Home(),
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       home: //const otobusBilgi() 
       //googleMap()
-      /*StreamBuilder<User?>(
+      StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if(snapshot.hasError)
@@ -56,15 +57,15 @@ class MyApp extends StatelessWidget {
           {
             if(snapshot.data == null)
             {
-              return const LoginPage();
+              return  const LoginPage();
             }
             else
             {
-              return const HomePage(title: 'Arama');
+              return const HomePage();
             }
           }
           return const Center(child: CircularProgressIndicator());
         },
-      )*/ const Home()); 
+      ));  //const Home()
   }
 }

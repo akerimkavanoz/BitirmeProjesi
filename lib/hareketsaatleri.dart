@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:otobus/saatler.dart';
 
 class hareketSaatleri extends StatefulWidget {
   const hareketSaatleri({super.key});
@@ -10,19 +12,23 @@ class hareketSaatleri extends StatefulWidget {
 
 class _hareketSaatleriState extends State<hareketSaatleri> {
   late final List<dynamic> duplicateItems = [];
+  late final List<String> dizi = [];
+  TextEditingController editingController = TextEditingController();
   var ref = FirebaseFirestore.instance.collection('hatlar');
 
   _incerementCounter() async {
     var allDocs = await ref.get();
     var response = allDocs.docs;
-    for (var doc in response) {
-      duplicateItems.add(doc.data()['id'] + " " + doc.data()['konum']);
-      //print(doc.data()['konum']);
+    if (duplicateItems.isEmpty) {
+      for (var doc in response) {
+        duplicateItems.add(doc.data()['id'] + " " + doc.data()['konum']);
+        //print(doc.data()['konum']);
+      }
     }
   }
 
-   List<dynamic> items = [];
-
+  List<dynamic> items = [];
+  
   @override
   void initState() {
     _incerementCounter();
@@ -46,44 +52,44 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
   //       items.clear();
   //       items.addAll(dummyListData);
   //       print(items);
-         
+
   //     });
   //     return;
   //   } else {
   //     setState(() {
   //       items.clear();
   //       items.addAll(duplicateItems);
-        
+
   //        print(items);
   //     });
   //   }
   // }
 
   void filterSearchResults(String query) {
-  List<dynamic> dummySearchList = [];
-  dummySearchList.addAll(duplicateItems);
+    List<dynamic> dummySearchList = [];
+    dummySearchList.addAll(duplicateItems);
 
-  if (query.isNotEmpty) {
-    List<String> dummyListData = [];
-    for (var item in dummySearchList) {
-      if (item.contains(query)) {
-        dummyListData.add(item);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = [];
+      for (var item in dummySearchList) {
+        if (item.contains(query)) {
+          dummyListData.add(item);
+        }
       }
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+        //print(items);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(duplicateItems);
+        //print(items);
+      });
     }
-    setState(() {
-      items.clear();
-      items.addAll(dummyListData);
-      print(items);
-    });
-    return;
-  } else {
-    setState(() {
-      items.clear();
-      items.addAll(duplicateItems);
-      print(items);
-    });
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +111,7 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
                 onChanged: (value) {
                   filterSearchResults(value);
                 },
+                controller: editingController,
                 style: const TextStyle(fontSize: 20),
                 decoration: InputDecoration(
                   hintText: "Hat Ara",
@@ -122,7 +129,12 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
                 shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) => InkWell(
-                  onTap: () => _incerementCounter(),
+                  onTap: () async { 
+                    String a = items[index];
+                    String b = a.substring(0,a.indexOf(" "));
+                     print("giden$b");
+                    Get.to(()=> saatler(id: b));
+                  },
                   child: ListTile(
                     leading: const CircleAvatar(
                         backgroundImage: AssetImage('assets/images/bus0.png')),
@@ -132,7 +144,8 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
                     ),
                   ),
                 ),
-                separatorBuilder: (context, index) => const Divider(thickness: 3),
+                separatorBuilder: (context, index) =>
+                    const Divider(thickness: 3),
               ),
             ),
           ],
