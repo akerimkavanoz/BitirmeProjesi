@@ -11,6 +11,7 @@ import 'package:otobus/sign_up.dart';
 import 'package:otobus/kayip_esya.dart';
 import 'package:otobus/hareketsaatleri.dart';
 import 'package:otobus/favoriOtobus.dart';
+import 'package:otobus/gorusBildir.dart';
 
 import 'firebase_options.dart';
 
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
         "/googleMap" : (context) => googleMap(),
         "/kayipEsya": (context) => const Kayip_Esya(), 
         "/hareketSaatleri": (context) => const hareketSaatleri(),
-        "/favoriOtobus": (context) => const favoriOtobus()
+        "/favoriOtobus": (context) => const favoriOtobus(),
+        "/gorusBildir": (context) => const gorusBildir()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

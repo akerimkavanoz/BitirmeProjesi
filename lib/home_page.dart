@@ -104,6 +104,9 @@ class _HomePageState extends State<HomePage> {
               ),
               myDrawerItem(Icons.shopping_bag, Colors.amber,
                   "Kayıp Eşya Bildir", "/kayipEsya"),
+              
+               myDrawerItem(Icons.chat_outlined, Colors.amber,
+                  "Görüş/Öneri Bildir", "/gorusBildir"),
               Divider(
                 thickness: 1,
                 color: Colors.grey.shade500,

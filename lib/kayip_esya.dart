@@ -121,8 +121,13 @@ class _Kayip_EsyaState extends State<Kayip_Esya> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    print("a");
+                    //print("a");
                     yaziEkle();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("İşlem başarılı")
+                                    ),
+                                );
                   }
                 },
                 child: const Text("Gönder"),
