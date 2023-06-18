@@ -11,7 +11,8 @@ class otobusBilgi extends StatefulWidget {
   final bool gelenSayfa;
   const otobusBilgi({
     Key? key,
-    required this.oismi, required this.gelenSayfa,
+    required this.oismi,
+    required this.gelenSayfa,
   }) : super(key: key);
 
   @override
@@ -27,8 +28,13 @@ class _otobusBilgiState extends State<otobusBilgi> {
 
   @override
   void initState() {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String userID = "";
+    if (user != null) {
+      userID = user.uid;
+    }
     super.initState();
-    isFavorite = RxBool(box.read(widget.oismi) ?? false);
+    isFavorite = RxBool(box.read(userID + widget.oismi) ?? false);
 
     _otobusler = ref.where('otobusismi', isEqualTo: widget.oismi).snapshots();
   }
@@ -66,7 +72,7 @@ class _otobusBilgiState extends State<otobusBilgi> {
           .doc(widget.oismi)
           .set({'otobusismi': widget.oismi});
       isFavorite.toggle();
-      box.write(widget.oismi, isFavorite.value);
+      box.write(userID + widget.oismi, isFavorite.value);
     } else {
       await _firestore
           .collection('kullanıcılar')
@@ -75,10 +81,8 @@ class _otobusBilgiState extends State<otobusBilgi> {
           .doc(widget.oismi)
           .delete();
 
-        isFavorite.toggle();
-        box.remove(widget.oismi);
-        
-    
+      isFavorite.toggle();
+      box.remove(userID + widget.oismi);
     }
   }
 
@@ -86,16 +90,19 @@ class _otobusBilgiState extends State<otobusBilgi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () {
-          if (widget.gelenSayfa == false) {
-            Get.off(const HomePage());
-          }
-          else{
-             Get.off(const favoriOtobus());
-          }
-        },),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (widget.gelenSayfa == false) {
+              Get.off(const HomePage());
+            } else {
+              Get.off(const favoriOtobus());
+            }
+          },
+        ),
         backgroundColor: const Color(0xff21254A),
-        title: const Text("Otobüs Bilgi"),
+        title: Text(widget.oismi),
         actions: [
           InkWell(
             child: Obx(() => isFavorite.value
@@ -128,19 +135,48 @@ class _otobusBilgiState extends State<otobusBilgi> {
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-
-              return ListTile(
-                title: Text('Otobüs İsmi: ' + data['otobusismi']),
-                subtitle: Text("Kişi Sayısı: ${data['kisisayisi']}"),
-                trailing: Column(children: [
-                  Text("Plaka: ${data['plaka']}"),
-                  Text("Konum: ${data['konum']}"),
-                ]),
-              );
+              return Column(
+                children: [
+                  card("Otobüs ismi : ${ data['otobusismi']}", Icons.bus_alert),
+                  card("Kişi sayısı : ${ data['kisisayisi']}", Icons.people_alt_sharp),
+                  card("Konum : ${ data['konum']}", Icons.location_on),
+                  card("Plaka : ${ data['plaka']}", Icons.format_list_numbered),
+              ],);
+              
             }).toList(),
           );
         },
       ),
     );
   }
+
+  Widget card(String text, IconData icon) {
+    return SizedBox(
+      height: 80,
+      width: double.maxFinite,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          children: [
+            const SizedBox(width: 20),
+            Icon(icon),
+            const SizedBox(width: 20),
+            Text(
+              text,
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+// return ListTile(
+//                 title: Text('Otobüs İsmi: ' + data['otobusismi']),
+//                 subtitle: Text("Kişi Sayısı: ${data['kisisayisi']}"),
+//                 trailing: Column(children: [
+//                   Text("Plaka: ${data['plaka']}"),
+//                   Text("Konum: ${data['konum']}"),
+//                 ]),
+//               );

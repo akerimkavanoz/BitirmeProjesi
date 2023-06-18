@@ -60,6 +60,7 @@ class _favoriOtobusState extends State<favoriOtobus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Favori Otobüsler"),
       ),
       body: Center(
@@ -70,13 +71,32 @@ class _favoriOtobusState extends State<favoriOtobus> {
                 itemCount: duplicateItems.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {
-                      Get.off(otobusBilgi(oismi: duplicateItems[index], gelenSayfa: true));
-                    },
-                    child: ListTile(
-                      title: Text(duplicateItems[index]),
+                  child: SizedBox(
+                    height: 80,
+                    width: double.maxFinite,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 20),
+                          const CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/bus0.png')),
+                          const SizedBox(width: 20),
+                          Text(
+                            "Otobüs İsmi: " + duplicateItems[index],
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
-                  );
+                  ),
+                  onTap: () {
+                    Get.off(otobusBilgi(
+                        oismi: duplicateItems[index], gelenSayfa: true));
+                  },
+                );
                 }),
           ],)),
     );

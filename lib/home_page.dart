@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:otobus/favoriOtobus.dart';
-import 'package:otobus/googlemap.dart';
 import 'package:otobus/otobusbilgi.dart';
 
 class HomePage extends StatefulWidget {
@@ -65,11 +64,14 @@ class _HomePageState extends State<HomePage> {
         });
       }
   }
- 
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
+        centerTitle: true,
         actions: [
           IconButton(onPressed: () async{
             await GoogleSignIn().signOut();
@@ -80,6 +82,40 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color(0xff21254A),
         title: const Text("Arama"),
       ),
+       drawer: Drawer(
+          child: Column(
+            children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                    color: Color(0xff21254A),
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/bus.png"),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                child: Container(
+
+                ),
+                  ),
+                //myDrawerItem(Icons.credit_card, Colors.blue, "Kart Dolum Merkezleri"),
+                //myDrawerItem(Icons.add_alert_sharp, Colors.blue, "Alarm Yönetimi"),
+
+                myDrawerItem(Icons.watch_later_outlined, Colors.blue, "Hareket Saatleri", "/hareketSaatleri"),
+                Divider(
+                  thickness: 1,
+                  color: Colors.grey.shade500,
+                ),
+                myDrawerItem(Icons.shopping_bag,Colors.amber, "Kayıp Eşya Bildir", "/kayipEsya"),
+                  Divider(
+                  thickness: 1,
+                  color: Colors.grey.shade500,
+                ),
+
+                myDrawerItem(Icons.location_on, Colors.deepOrange, "Haritada konumumu göster", "/googleMap")
+
+            ],
+          ),
+        ),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -98,27 +134,62 @@ class _HomePageState extends State<HomePage> {
                 )
               ),
             ),
+            ElevatedButton(onPressed: () => Get.to(const favoriOtobus()), child: const Text("Favori Otobüsler")),
             const SizedBox(height: 10),
             ListView.builder(
               shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Get.off(otobusBilgi(oismi: items[index],gelenSayfa: false,));
-                      //print(items);
-                    },
-                    child: ListTile(
-                      title: Text(items[index]),
+                return InkWell(
+                  child: SizedBox(
+                    height: 80,
+                    width: double.maxFinite,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 20),
+                          const CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/bus0.png')),
+                          const SizedBox(width: 20),
+                          Text(
+                            "Otobüs İsmi: " + items[index],
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
-                  );
+                  ),
+                  onTap: () {
+                    Get.off(otobusBilgi(
+                        oismi: items[index], gelenSayfa: false));
+                  },
+                );
                 }),
-                ElevatedButton(onPressed: () => Get.to(googleMap()), child: const Text("Haritada konumumu göster")),
-                ElevatedButton(onPressed: () => Get.to(const favoriOtobus()), child: const Text("Favori Otobüsler")),
+
           ],
         ),
       ),
     );
   }
+  Widget myDrawerItem(IconData icon, MaterialColor color, String title, String routeName)=> ListTile(
+    leading: Icon(icon, color: color),
+    title: Text(title), textColor: color,
+    onTap: () {
+      _scaffoldKey.currentState?.openEndDrawer();
+      Navigator.pushNamed(context, routeName);
+    }
+  );
 }
+// return InkWell(
+//                     onTap: () {
+//                       Get.off(otobusBilgi(oismi: items[index],gelenSayfa: false,));
+//                       //print(items);
+//                     },
+//                     child: ListTile(
+//                       title: Text(items[index]),
+//                     ),
+//                   );
 

@@ -8,7 +8,6 @@ import 'package:otobus/home_page.dart';
 import 'package:otobus/login_page.dart';
 import 'package:otobus/reset_password.dart';
 import 'package:otobus/sign_up.dart';
-import 'package:otobus/home.dart';
 import 'package:otobus/kayip_esya.dart';
 import 'package:otobus/hareketsaatleri.dart';
 import 'package:otobus/favoriOtobus.dart';
@@ -37,7 +36,6 @@ class MyApp extends StatelessWidget {
         "/homePage" : (context) => const HomePage(),
         "/resetPassword" : (context) => const ResetPassword(),
         "/googleMap" : (context) => googleMap(),
-        "/home":(context) =>  const Home(),
         "/kayipEsya": (context) => const Kayip_Esya(), 
         "/hareketSaatleri": (context) => const hareketSaatleri(),
         "/favoriOtobus": (context) => const favoriOtobus()
