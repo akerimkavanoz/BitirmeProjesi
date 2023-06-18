@@ -1,61 +1,104 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:otobus/favoriOtobus.dart';
+import 'package:otobus/home_page.dart';
 
 class otobusBilgi extends StatefulWidget {
   final String oismi;
+  final bool gelenSayfa;
   const otobusBilgi({
     Key? key,
-    required this.oismi,
+    required this.oismi, required this.gelenSayfa,
   }) : super(key: key);
 
   @override
   State<otobusBilgi> createState() => _otobusBilgiState();
 }
 
-class _otobusBilgiState extends State<otobusBilgi>  {
+class _otobusBilgiState extends State<otobusBilgi> {
   late Stream<QuerySnapshot> _otobusler;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   var ref = FirebaseFirestore.instance.collection('otobusler');
-  late bool isFavorite;
+  final box = GetStorage();
+  late RxBool isFavorite;
 
   @override
   void initState() {
     super.initState();
-    isFavorite = false;
+    isFavorite = RxBool(box.read(widget.oismi) ?? false);
+
     _otobusler = ref.where('otobusismi', isEqualTo: widget.oismi).snapshots();
   }
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
- 
+
   void setFavorite() async {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-   
-    final User? user = _firebaseAuth.currentUser;
-    String userID="";
+    final User? user = FirebaseAuth.instance.currentUser;
+    String userID = "";
     if (user != null) {
       userID = user.uid;
-      //print('Logged-in User ID: $userID');
-      
     }
-    await _firestore
-        .collection('kullanıcılar')
-        .doc(userID)
-        .collection('favori')
-        .doc('otobus')
-        .set({'otobusismi': widget.oismi});
+
+    // var allDocs = await _firestore
+    //     .collection('kullanıcılar')
+    //     .doc(userID)
+    //     .collection('favoriOtobus')
+    //     .get();
+
+    // var response = allDocs.docs;
+
+    // for (var doc in response) {
+    //   if (doc.data()['otobusismi'] == widget.oismi){
+    //     isFavorite.value = true;
+    //   }
+    //   else {
+    //     isFavorite.value = false;
+    //   }
+
+    // }
+
+    if (isFavorite == false) {
+      await _firestore
+          .collection('kullanıcılar')
+          .doc(userID)
+          .collection('favoriOtobus')
+          .doc(widget.oismi)
+          .set({'otobusismi': widget.oismi});
+      isFavorite.toggle();
+      box.write(widget.oismi, isFavorite.value);
+    } else {
+      await _firestore
+          .collection('kullanıcılar')
+          .doc(userID)
+          .collection('favoriOtobus')
+          .doc(widget.oismi)
+          .delete();
+
+        isFavorite.toggle();
+        box.remove(widget.oismi);
+        
+    
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () {
+          if (widget.gelenSayfa == false) {
+            Get.off(const HomePage());
+          }
+          else{
+             Get.off(const favoriOtobus());
+          }
+        },),
         backgroundColor: const Color(0xff21254A),
         title: const Text("Otobüs Bilgi"),
         actions: [
           InkWell(
-            child: isFavorite
+            child: Obx(() => isFavorite.value
                 ? const Icon(
                     Icons.star,
                     size: 40,
@@ -63,7 +106,7 @@ class _otobusBilgiState extends State<otobusBilgi>  {
                 : const Icon(
                     Icons.star_border,
                     size: 40,
-                  ),
+                  )),
             onTap: () {
               setFavorite();
             },

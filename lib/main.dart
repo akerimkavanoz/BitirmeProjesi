@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:otobus/googlemap.dart';
 import 'package:otobus/home_page.dart';
 import 'package:otobus/login_page.dart';
@@ -10,6 +11,7 @@ import 'package:otobus/sign_up.dart';
 import 'package:otobus/home.dart';
 import 'package:otobus/kayip_esya.dart';
 import 'package:otobus/hareketsaatleri.dart';
+import 'package:otobus/favoriOtobus.dart';
 
 import 'firebase_options.dart';
 
@@ -18,6 +20,7 @@ void main() async{
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,);
       //SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      await GetStorage.init();
   runApp( const MyApp());
 }
 
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
         "/home":(context) =>  const Home(),
         "/kayipEsya": (context) => const Kayip_Esya(), 
         "/hareketSaatleri": (context) => const hareketSaatleri(),
+        "/favoriOtobus": (context) => const favoriOtobus()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:otobus/favoriOtobus.dart';
 import 'package:otobus/googlemap.dart';
 import 'package:otobus/otobusbilgi.dart';
 
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Get.to(otobusBilgi(oismi: items[index],));
+                      Get.off(otobusBilgi(oismi: items[index],gelenSayfa: false,));
                       //print(items);
                     },
                     child: ListTile(
@@ -113,6 +114,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }),
                 ElevatedButton(onPressed: () => Get.to(googleMap()), child: const Text("Haritada konumumu göster")),
+                ElevatedButton(onPressed: () => Get.to(const favoriOtobus()), child: const Text("Favori Otobüsler")),
           ],
         ),
       ),
