@@ -25,6 +25,7 @@ class _Kayip_EsyaState extends State<Kayip_Esya> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Kayıp Eşya Bildir",
             style: TextStyle(fontWeight: FontWeight.normal)),
         elevation: 0,

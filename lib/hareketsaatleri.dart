@@ -28,13 +28,15 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
   }
 
   List<dynamic> items = [];
-  
+
   @override
   void initState() {
-    _incerementCounter();
-    items.addAll(duplicateItems);
+    _incerementCounter().then((_) {
+      setState(() {
+        items.addAll(duplicateItems);
+      });
+    });
     super.initState();
-    
   }
 
   // void filterSearchResults(String query) {
@@ -66,12 +68,9 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
   // }
 
   void filterSearchResults(String query) {
-    List<dynamic> dummySearchList = [];
-    dummySearchList.addAll(duplicateItems);
-
     if (query.isNotEmpty) {
-      List<String> dummyListData = [];
-      for (var item in dummySearchList) {
+      List<String> dummyListData = <String>[];
+      for (var item in duplicateItems) {
         if (item.contains(query)) {
           dummyListData.add(item);
         }
@@ -79,14 +78,11 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
       setState(() {
         items.clear();
         items.addAll(dummyListData);
-        //print(items);
       });
-      return;
     } else {
       setState(() {
         items.clear();
         items.addAll(duplicateItems);
-        //print(items);
       });
     }
   }
@@ -96,6 +92,7 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
     var heigth = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         title: const Text("HAT SEÇİNİZ"),
       ),
@@ -129,11 +126,11 @@ class _hareketSaatleriState extends State<hareketSaatleri> {
                 shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) => InkWell(
-                  onTap: () async { 
+                  onTap: () async {
                     String a = items[index];
-                    String b = a.substring(0,a.indexOf(" "));
-                     print("giden$b");
-                    Get.to(()=> saatler(id: b));
+                    String b = a.substring(0, a.indexOf(" "));
+                    print("giden$b");
+                    Get.to(() => saatler(id: b));
                   },
                   child: ListTile(
                     leading: const CircleAvatar(

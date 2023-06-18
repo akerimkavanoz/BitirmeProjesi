@@ -155,6 +155,7 @@ class _otobusBilgiState extends State<otobusBilgi> {
       height: 80,
       width: double.maxFinite,
       child: Card(
+        color: Colors.blue.shade100,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: [

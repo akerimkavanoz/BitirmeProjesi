@@ -50,6 +50,7 @@ class _saatlerState extends State<saatler> {
           var fieldValue = data['konum'];
           //print(fieldValue);
           return "${a.toString()} \n ${fieldValue.toString()}";
+    
         } else {
           return 'Belge bulunamadı';
         }
@@ -127,6 +128,7 @@ class _saatlerState extends State<saatler> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: FutureBuilder<String>(
             future: getFieldValue(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
@@ -160,19 +162,23 @@ class _saatlerState extends State<saatler> {
               children: [
                 TableCell(
                   child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: const Text(
-                      'Hafta İçi',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.all(12),
+                    child: const Center(
+                      child: Text(
+                        'Hafta İçi',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      ),
                     ),
                   ),
                 ),
                 TableCell(
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    child: const Text(
-                      'Hafta Sonu',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: const Center(
+                      child: Text(
+                        'Hafta Sonu',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      ),
                     ),
                   ),
                 ),
@@ -185,17 +191,23 @@ class _saatlerState extends State<saatler> {
                 children: [
                   TableCell(
                     child: Container(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        i < haftaiciData.length ? haftaiciData[i] : '',
+                      padding: const EdgeInsets.all(12),
+                      child: Center(
+                        child: Text(
+                          i < haftaiciData.length ? haftaiciData[i] : '',
+                           style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
                   TableCell(
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      child: Text(
-                        i < haftasonuData.length ? haftasonuData[i] : '',
+                      child: Center(
+                        child: Text(
+                          i < haftasonuData.length ? haftasonuData[i] : '',
+                          style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
@@ -204,74 +216,6 @@ class _saatlerState extends State<saatler> {
           ],
         ),
       ),
-
-      // body: Center(
-      //   child: Container(
-      //     child: Column(
-      //       children: [
-      //         ElevatedButton(
-      //             onPressed: () {
-      //               test('haftaici', 'kalkis1');
-      //               test('haftasonu', 'kalkis1');
-      //             },
-      //             child: const Text("deneme")),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      //   body: SafeArea(
-      //     child: FutureBuilder(
-      //       future: test('haftaici', 'kalkis1'),
-      //       builder: (context, snapshot) {
-      //         return ListView.builder(
-      //           itemCount: 2,
-      //           itemBuilder: (context, index) =>
-      //             DataTable(
-      //               columnSpacing: 170,
-      //               columns: const <DataColumn>[
-      //                 DataColumn(
-      //                   label: Expanded(
-      //                     child: Text(
-      //                       'Haftaiçi',
-      //                       style: TextStyle(fontStyle: FontStyle.italic),
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 DataColumn(
-      //                   label: Expanded(
-      //                     child: Text(
-      //                       'Haftasonu',
-      //                       style: TextStyle(fontStyle: FontStyle.italic),
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ],
-      //               rows: <DataRow>[
-      //                 DataRow(
-      //                   cells: <DataCell>[
-      //                     DataCell(Text(test('haftaici', 'kalkis1')[index])),
-      //                     const DataCell(Text('19')),
-      //                   ],
-      //                 ),
-      //                 const DataRow(
-      //                   cells: <DataCell>[
-      //                     DataCell(Text('Janine')),
-      //                     DataCell(Text('43')),
-      //                   ],
-      //                 ),
-      //                 const DataRow(
-      //                   cells: <DataCell>[
-      //                     DataCell(Text('William')),
-      //                     DataCell(Text('27')),
-      //                   ],
-      //                 ),
-      //               ],
-      //             ),
-
-      //         );
-      //       }
-      //     ),
-      //   ),
     );
   }
 
