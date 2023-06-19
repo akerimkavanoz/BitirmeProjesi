@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:otobus/home_page.dart';
 
@@ -54,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Bilgileri eksiksiz doldurunuz";
-                          } else {}
+                          }
                           return null;
                         },
                         onSaved: (value) {
@@ -68,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Bilgileri eksiksiz doldurunuz";
-                          } else {}
+                          }
                           return null;
                         },
                         onSaved: (value) {
@@ -106,9 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                                     .doc(userResult.user!.uid)
                                     .set({'userID': userResult.user!.uid});
                               } catch (e) {
-                                print(e.toString());
+                                Get.snackbar("Uyarı",
+                                    "Email veya şifreniz yanlış.",
+                                    backgroundColor: Colors.red.shade200,
+                                    icon: const Icon(Icons.error));
                               }
-                            } else {}
+                            }
                           },
                           child: Container(
                             height: 50,
@@ -185,8 +189,8 @@ class _LoginPageState extends State<LoginPage> {
     print(userCredential.user?.displayName);
 
     if (userCredential.user != null) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomePage()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const HomePage()));
       await _firestore
           .collection('kullanıcılar')
           .doc(userCredential.user!.uid)

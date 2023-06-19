@@ -2,21 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class googleMap extends StatelessWidget {
-  googleMap({super.key});
+class googleMap extends StatefulWidget {
+  const googleMap({super.key});
 
-   late GoogleMapController googleMapController;
+  @override
+  State<googleMap> createState() => _googleMapState();
+}
 
-  static const CameraPosition initialCameraPosition = CameraPosition(target: LatLng(41.016760, 39.584187), zoom: 14);
+class _googleMapState extends State<googleMap> {
+  late GoogleMapController googleMapController;
+
+  static const CameraPosition initialCameraPosition = CameraPosition(target: LatLng(39.91742 , 41.23568), zoom: 14);
 
   Set<Marker> markers = {};
 
-  
+  void _addMarkers() {
+    setState(() {
+      markers.add(
+        const Marker(
+          markerId: MarkerId('marker1'),
+          position: LatLng(39.90467 , 41.26177),
+          infoWindow: InfoWindow(
+            title: 'Erzurum Büyükşehir Belediyesi',
+            snippet: 'Kart Dolum Merkezi',
+          ),
+        ),
+      );
+      markers.add(
+        const Marker(
+          markerId: MarkerId('marker2'),
+          position: LatLng(39.905643711033285, 41.265708477663374),
+          infoWindow: InfoWindow(
+            title: 'Havuzbaşı',
+            snippet: 'Kart Dolum Noktası',
+          ),
+        ),
+      );
+
+      markers.add(
+        const Marker(
+          markerId: MarkerId('marker3'),
+          position: LatLng(39.911801463729184, 41.2509645385728),
+          infoWindow: InfoWindow(
+            title: 'MNG Avm',
+            snippet: 'Kart Dolum Noktası',
+          ),
+        ),
+      );
+    });
+  }
+
   @override
+  void initState() {
+    super.initState();
+    _addMarkers();
+  }
+
+   @override
  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Mevcut Konumunuz"),
+        title: const Text("Kart Dolum Merkezleri"),
         centerTitle: true,
       ),
       body: GoogleMap(

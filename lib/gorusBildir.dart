@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class gorusBildir extends StatefulWidget {
   const gorusBildir({super.key});
@@ -11,6 +13,7 @@ class gorusBildir extends StatefulWidget {
 class _gorusBildirState extends State<gorusBildir> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
+  bool isFull = false;
   TextEditingController t1 = TextEditingController();
   TextEditingController t2 = TextEditingController();
   TextEditingController t3 = TextEditingController();
@@ -45,35 +48,29 @@ class _gorusBildirState extends State<gorusBildir> {
                     myRow("TC Kimlik", "Zorunlu Alan"),
                     sizedBox(8),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: t1,
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Bu alan boş bırakılamaz";
+                        if (value!.isEmpty || value.length != 11) {
+                          return '11 haneli kimlik numaranızı giriniz.';
                         }
                         return null;
                       },
                       onSaved: (value) {
                         t1.text = value!;
                       },
+
                       decoration: customDecoration(),
                       maxLength: 11,
                     ),
                     sizedBox(15),
                     myRow("Tel No", "Zorunlu Alan"),
                     sizedBox(8),
-                    TextFormField(
+                   IntlPhoneField(
                       controller: t2,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Bu alan boş bırakılamaz";
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        t2.text = value!;
-                      },
                       decoration: customDecoration(),
-                      maxLength: 11,
+                      initialCountryCode:
+                          'TR', // Başlangıçta Türkiye ülke kodunu ayarlar
                     ),
                     sizedBox(15),
                     myRow("E-Mail Adres", "Zorunlu Alan"),
@@ -119,11 +116,10 @@ class _gorusBildirState extends State<gorusBildir> {
                   if (_formKey.currentState!.validate()) {
                     //print("a");
                     yaziEkle();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text("İşlem başarılı")
-                                    ),
-                                );
+                    Get.snackbar(
+                        "İşlem Başarılı", "Görüş/Önerileriniz gönderilmiştir.",
+                        backgroundColor: Colors.blue.shade100,
+                        icon: const Icon(Icons.check));
                   }
                 },
                 child: const Text("Gönder"),

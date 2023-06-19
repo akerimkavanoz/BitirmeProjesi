@@ -35,7 +35,7 @@ class _otobusBilgiState extends State<otobusBilgi> {
     }
     super.initState();
     isFavorite = RxBool(box.read(userID + widget.oismi) ?? false);
-
+  
     _otobusler = ref.where('otobusismi', isEqualTo: widget.oismi).snapshots();
   }
 

@@ -122,6 +122,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_credit_card",
+      "rootUri": "file:///C:/Users/Kerim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_credit_card-3.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///C:/Users/Kerim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1",
       "packageUri": "lib/",
@@ -268,6 +274,12 @@
     {
       "name": "intl",
       "rootUri": "file:///C:/Users/Kerim/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl_phone_field",
+      "rootUri": "file:///C:/Users/Kerim/AppData/Local/Pub/Cache/hosted/pub.dev/intl_phone_field-3.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -446,7 +458,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-06-17T19:04:29.339529Z",
+  "generated": "2023-06-19T17:53:21.866239Z",
   "generator": "pub",
   "generatorVersion": "2.19.4"
 }

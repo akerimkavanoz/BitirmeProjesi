@@ -12,6 +12,8 @@ import 'package:otobus/kayip_esya.dart';
 import 'package:otobus/hareketsaatleri.dart';
 import 'package:otobus/favoriOtobus.dart';
 import 'package:otobus/gorusBildir.dart';
+import 'package:otobus/hakkimizda.dart';
+import 'package:otobus/odeme.dart';
 
 import 'firebase_options.dart';
 
@@ -36,11 +38,13 @@ class MyApp extends StatelessWidget {
         "/signUp" : (context) => const SignUp(),
         "/homePage" : (context) => const HomePage(),
         "/resetPassword" : (context) => const ResetPassword(),
-        "/googleMap" : (context) => googleMap(),
+        "/googleMap" : (context) => const googleMap(),
         "/kayipEsya": (context) => const Kayip_Esya(), 
         "/hareketSaatleri": (context) => const hareketSaatleri(),
         "/favoriOtobus": (context) => const favoriOtobus(),
-        "/gorusBildir": (context) => const gorusBildir()
+        "/gorusBildir": (context) => const gorusBildir(),
+        "/hakkimizda": (context) => const hakkimizda(),
+        "/odeme": (context) => const odeme()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

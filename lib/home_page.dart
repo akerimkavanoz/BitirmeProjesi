@@ -93,11 +93,14 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Container(),
               ),
-              //myDrawerItem(Icons.credit_card, Colors.blue, "Kart Dolum Merkezleri"),
-              //myDrawerItem(Icons.add_alert_sharp, Colors.blue, "Alarm Yönetimi"),
-
               myDrawerItem(Icons.watch_later_outlined, Colors.blue,
                   "Hareket Saatleri", "/hareketSaatleri"),
+              
+              myDrawerItem(Icons.location_on, Colors.blue,
+                  "Kart Dolum Merkezleri", "/googleMap"),
+              
+              myDrawerItem(Icons.credit_card, Colors.blue, "Karta Para Yükleme", "/odeme"),
+              //myDrawerItem(Icons.add_alert_sharp, Colors.blue, "Alarm Yönetimi"),
               Divider(
                 thickness: 1,
                 color: Colors.grey.shade500,
@@ -111,9 +114,9 @@ class _HomePageState extends State<HomePage> {
                 thickness: 1,
                 color: Colors.grey.shade500,
               ),
+              myDrawerItem(Icons.info, Colors.blueGrey, "Hakkımızda", "/hakkimizda"),
 
-              myDrawerItem(Icons.location_on, Colors.deepOrange,
-                  "Haritada konumumu göster", "/googleMap")
+              
             ],
           ),
         ),
